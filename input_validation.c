@@ -6,7 +6,7 @@
 /*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 07:25:21 by luis-ffe          #+#    #+#             */
-/*   Updated: 2024/01/09 07:26:09 by luis-ffe         ###   ########.fr       */
+/*   Updated: 2024/01/15 12:07:22 by luis-ffe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	check_extra_errors(t_philo philo)
 	return (0);
 }
 
-static int	check_arg_content(char *str)
+int		check_arg_content(char *str)
 {
 	int	i;
 
@@ -55,4 +55,28 @@ int	ft_validate_args(int argc, char **argv)
 		}
 	}
 	return (1);
+}
+
+int	ft_atoi(const char *str)
+{
+	int		i;
+	long	j;
+
+	i = 0;
+	j = 0;
+	while ((str[i] >= 9 && str[i] <= 13) || str[i] == ' ')
+		i++;
+	while (str[i] >= '0' && str[i] <= '9')
+	{
+		j *= 10;
+		j += str[i++] - '0';
+	}
+	return ((int)j);
+}
+
+void	print_error(void)
+{
+	printf("\nINPUT ERROR\n");
+	printf("use as: ./philo <number_of_philos> <time_to_die> <time_to_eat>");
+	printf(" <time_to_sleep> [number_of_meals]\n");
 }

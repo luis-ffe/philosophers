@@ -6,7 +6,7 @@
 /*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 01:39:37 by luis-ffe          #+#    #+#             */
-/*   Updated: 2024/01/09 07:28:26 by luis-ffe         ###   ########.fr       */
+/*   Updated: 2024/01/15 16:56:54 by luis-ffe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 
 typedef struct s_data
 {
+	pthread_mutex_t	access;
 	bool			running;
 	int				phil_nbr;
 	int				die_time;
@@ -48,18 +49,20 @@ typedef struct s_philo
 //                         UTILS.C                           //
 ///////////////////////////////////////////////////////////////
 
-void		ft_current_time(t_philo *philo);
-long long	time_diff(t_philo philo);
+bool		get_mutex_bool(pthread_mutex_t *mutex, bool *info);
+long long	update_current_time(t_philo *philo);
 long long	my_gettimeofday(void);
-int			ft_atoi(const char *str);
-void		print_error(void);
+bool	is_he_alive(t_philo *philo);
 
 ///////////////////////////////////////////////////////////////
 //                   INPUT_VALIDATION.C                      //
 ///////////////////////////////////////////////////////////////
 
-int			ft_validate_args(int argc, char **argv);
 int			check_extra_errors(t_philo philo);
+int			check_arg_content(char *str);
+int			ft_validate_args(int argc, char **argv);
+int			ft_atoi(const char *str);
+void		print_error(void);
 
 ///////////////////////////////////////////////////////////////
 //                          INIT.C                           //
@@ -73,15 +76,29 @@ void		destroy_all_mutex(t_philo *philos);
 //                         ROUTINE.C                         //
 ///////////////////////////////////////////////////////////////
 
-void		ft_thinking(t_philo *philo);
-int			set_to_dead(t_philo *philo);
-void		ft_sleep_delay(t_philo *philo);
-void		ft_sleeping(t_philo *philo);
-void		ft_eat_delay(t_philo *philo);
-void		ft_eating(t_philo *philo);
-int			get_forks_eat(t_philo *philo);
-int			go_think(t_philo *philo);
-void		*routine(void *arg);
-void		thread_runner(t_philo *philos);
+void	*routine(void *arg);
+void	thread_runner(t_philo *philos);
 
+///////////////////////////////////////////////////////////////
+//                         ACTIONS.C                         //
+///////////////////////////////////////////////////////////////
+
+void		kill_philosopher_and_stop_running(t_philo *philo);
+void		philosopher_is_eating(t_philo *philo);
+int			philosopher_is_allowed_to(t_philo *philo);
+bool		philosopher_try_to_eat(t_philo *philo);
+void		philosopher_goes_to_sleep(t_philo *philo);
+
+///////////////////////////////////////////////////////////////
+//                     ACTIONS_UTILS.C                       //
+///////////////////////////////////////////////////////////////
+
+void		update_lastmeal_time(t_philo *philo);
+void		philosopher_grabs_forks(t_philo *philo);
+void		philosopher_drops_forks(t_philo *philo);
+void		ft_print_status(t_philo *philo, int status);
+
+
+
+int philosopher_is_on_time(t_philo *philo);
 #endif

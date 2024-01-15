@@ -1,4 +1,4 @@
-SRC = input_validation.c main.c routine.c utils.c init.c actions.c
+SRC = input_validation.c main.c routine.c utils.c init.c actions.c actions_utils.c
 
 OBJ = $(SRC:.c=.o)
 

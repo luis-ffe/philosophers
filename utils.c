@@ -6,13 +6,13 @@
 /*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 23:14:02 by luis-ffe          #+#    #+#             */
-/*   Updated: 2024/01/09 07:38:06 by luis-ffe         ###   ########.fr       */
+/*   Updated: 2024/01/15 17:19:22 by luis-ffe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-long long	ft_current_time(t_philo *philo)
+long long	update_current_time(t_philo *philo)
 {
 	long long ret;
 
@@ -33,16 +33,6 @@ long long	my_gettimeofday(void)
 	return (time_long);
 }
 
-int	get_mutex_int(pthread_mutex_t *mutex, int *info)
-{
-	int	value;
-
-	pthread_mutex_lock(mutex);
-	value = *info;
-	pthread_mutex_unlock(mutex);
-	return (value);
-}
-
 bool	get_mutex_bool(pthread_mutex_t *mutex, bool *info)
 {
 	bool	value;
@@ -53,23 +43,25 @@ bool	get_mutex_bool(pthread_mutex_t *mutex, bool *info)
 	return (value);
 }
 
-void	lock_forks(t_philo *philo)
+bool	is_he_alive(t_philo *philo)
 {
-	if (philo->id % 2 != 0)
-	{
-		pthread_mutex_lock(philo->r_fork);
-		pthread_mutex_lock(&philo->l_fork);
-	}
+	long long time_since_last_meal;
+
+	time_since_last_meal = update_current_time(philo) - philo->lastmeal;
+	if (time_since_last_meal < (long long)philo->data->die_time)
+		return true;
 	else
-	{
-		pthread_mutex_lock(&philo->l_fork);
-		pthread_mutex_lock(philo->r_fork);
-	}
+		kill_philosopher_and_stop_running(philo);
+	return false;
 }
 
-void	unlock_forks(t_philo *philo)
+int philosopher_is_on_time(t_philo *philo)
 {
-
-		pthread_mutex_unlock(philo->r_fork);
-		pthread_mutex_unlock(&philo->l_fork);
+	if (get_mutex_bool(&philo->data->access, &philo->data->running) == false)
+		return (0);
+	if (philo->meals_count == philo->data->meals_nbr)
+		return (0);
+	if (is_he_alive(philo) == false)
+		return (0);
+	return (1);
 }

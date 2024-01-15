@@ -6,7 +6,7 @@
 /*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 07:24:27 by luis-ffe          #+#    #+#             */
-/*   Updated: 2024/01/09 07:25:03 by luis-ffe         ###   ########.fr       */
+/*   Updated: 2024/01/15 12:22:12 by luis-ffe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,5 +62,5 @@ void	destroy_all_mutex(t_philo *philos)
 	i = -1;
 	while (++i < philos->data->phil_nbr && philos->data->running == false)
 		pthread_mutex_destroy(&philos[i].l_fork);
-	pthread_mutex_destroy(&philos[0].data->access);
+	pthread_mutex_destroy(&philos->data->access);
 }
