@@ -6,7 +6,7 @@
 /*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 01:39:37 by luis-ffe          #+#    #+#             */
-/*   Updated: 2024/01/15 16:56:54 by luis-ffe         ###   ########.fr       */
+/*   Updated: 2024/01/15 20:02:58 by luis-ffe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,10 +49,11 @@ typedef struct s_philo
 //                         UTILS.C                           //
 ///////////////////////////////////////////////////////////////
 
+int			philosopher_is_on_time(t_philo *philo);
 bool		get_mutex_bool(pthread_mutex_t *mutex, bool *info);
 long long	update_current_time(t_philo *philo);
 long long	my_gettimeofday(void);
-bool	is_he_alive(t_philo *philo);
+bool		is_he_alive(t_philo *philo);
 
 ///////////////////////////////////////////////////////////////
 //                   INPUT_VALIDATION.C                      //
@@ -76,8 +77,9 @@ void		destroy_all_mutex(t_philo *philos);
 //                         ROUTINE.C                         //
 ///////////////////////////////////////////////////////////////
 
-void	*routine(void *arg);
-void	thread_runner(t_philo *philos);
+void		philosopher_is_thinking(t_philo *philo);
+void		*routine(void *arg);
+void		thread_runner(t_philo *philos);
 
 ///////////////////////////////////////////////////////////////
 //                         ACTIONS.C                         //
@@ -94,11 +96,9 @@ void		philosopher_goes_to_sleep(t_philo *philo);
 ///////////////////////////////////////////////////////////////
 
 void		update_lastmeal_time(t_philo *philo);
-void		philosopher_grabs_forks(t_philo *philo);
+int			philosopher_grabs_forks(t_philo *philo);
 void		philosopher_drops_forks(t_philo *philo);
 void		ft_print_status(t_philo *philo, int status);
+int			philosopher_is_on_time(t_philo *philo);
 
-
-
-int philosopher_is_on_time(t_philo *philo);
 #endif

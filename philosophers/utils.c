@@ -6,7 +6,7 @@
 /*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 23:14:02 by luis-ffe          #+#    #+#             */
-/*   Updated: 2024/01/15 17:19:22 by luis-ffe         ###   ########.fr       */
+/*   Updated: 2024/01/15 20:00:22 by luis-ffe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 long long	update_current_time(t_philo *philo)
 {
-	long long ret;
+	long long	ret;
 
 	pthread_mutex_lock(&philo->data->access);
 	philo->data->current_time = (my_gettimeofday() - philo->data->start_time);
@@ -45,17 +45,17 @@ bool	get_mutex_bool(pthread_mutex_t *mutex, bool *info)
 
 bool	is_he_alive(t_philo *philo)
 {
-	long long time_since_last_meal;
+	long long	time_since_last_meal;
 
 	time_since_last_meal = update_current_time(philo) - philo->lastmeal;
 	if (time_since_last_meal < (long long)philo->data->die_time)
-		return true;
+		return (true);
 	else
 		kill_philosopher_and_stop_running(philo);
-	return false;
+	return (false);
 }
 
-int philosopher_is_on_time(t_philo *philo)
+int	philosopher_is_on_time(t_philo *philo)
 {
 	if (get_mutex_bool(&philo->data->access, &philo->data->running) == false)
 		return (0);

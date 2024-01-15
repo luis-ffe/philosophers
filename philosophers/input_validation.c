@@ -6,7 +6,7 @@
 /*   By: luis-ffe <luis-ffe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 07:25:21 by luis-ffe          #+#    #+#             */
-/*   Updated: 2024/01/15 12:07:22 by luis-ffe         ###   ########.fr       */
+/*   Updated: 2024/01/15 19:57:15 by luis-ffe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	check_extra_errors(t_philo philo)
 	return (0);
 }
 
-int		check_arg_content(char *str)
+int	check_arg_content(char *str)
 {
 	int	i;
 
